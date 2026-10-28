@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kairos – Sueños Festivos | Decoración con globos</title>
+<meta name="description" content="Decoración con globos y montajes para cumpleaños. Precios accesibles, diseños a tu medida.">
+<link rel="icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--card:#111;--gold:#e6b93c;--gold2:#fbe08a;--text:#f3ead2;--muted:#b9ad8c}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font:400 16px/1.6 Montserrat,system-ui,sans-serif}
+header{text-align:center;padding:32px 16px 8px}
+header img{width:min(340px,80%);border-radius:18px}
+h1{font:700 clamp(28px,5vw,44px)/1.15 'Cormorant Garamond',serif;color:var(--gold2);margin:20px 0 8px}
+header p{max-width:560px;margin:0 auto;color:var(--muted)}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1a1300;font-weight:600;padding:13px 26px;border-radius:999px;text-decoration:none;margin-top:20px}
+.btn:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+main{max-width:1100px;margin:0 auto;padding:32px 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid #3a2f12;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.card div{padding:14px 16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card h2{font:700 21px 'Cormorant Garamond',serif;color:var(--gold2)}
+.card a{color:var(--gold);font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.note{text-align:center;color:var(--muted);font-size:14px;margin-top:28px}
+footer{text-align:center;padding:32px 16px 48px;border-top:1px solid #2a2208}
+
+/* ===== Entrada al producto ===== */
+.thumb{all:unset;display:block;cursor:pointer;width:100%}
+.thumb:focus-visible,.card h2 button:focus-visible{outline:3px solid #fff;outline-offset:-3px}
+.card h2 button{all:unset;cursor:pointer}
+.card h2 button:hover{text-decoration:underline}
+.card img{transition:transform .25s}
+.thumb:hover img{transform:scale(1.03)}
+.thumb{overflow:hidden}
+dialog{margin:auto;background:var(--card);color:var(--text);border:1px solid #3a2f12;border-radius:16px;padding:0;width:min(520px,94vw);max-height:94vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.85)}
+dialog img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.v-info{padding:16px 18px 22px;text-align:center}
+.v-info h2{font:700 26px/1.2 'Cormorant Garamond',serif;color:var(--gold2)}
+.v-info .btn{margin-top:14px}
+.v-close,.v-nav{position:absolute;border:0;cursor:pointer;background:rgba(0,0,0,.65);color:var(--gold2);width:44px;height:44px;border-radius:50%;font-size:26px;line-height:1}
+.v-close{top:10px;right:10px}
+.v-nav{top:38%}
+.v-prev{left:10px}.v-next{right:10px}
+.v-close:focus-visible,.v-nav:focus-visible{outline:3px solid #fff}
+</style>
+</head>
+<body>
+<header>
+  <img src="images/logo.png" alt="Logo Kairos – Sueños Festivos">
+  <h1>Decoraciones que hacen tu fiesta inolvidable</h1>
+  <p>Arcos de globos, paneles, cortinas metálicas y neón. Precios justos, montaje incluido.</p>
+  <a class="btn" id="wa-top" href="#">Cotizar por WhatsApp</a>
+</header>
+<main>
+  <section class="grid" id="grid" aria-label="Catálogo de decoraciones"></section>
+  <p class="note">Precios en pesos colombianos (COP). Pueden variar según colores, tamaño y ubicación.</p>
+</main>
+<footer>
+  <a class="btn" id="wa-bottom" href="#">Reservar mi fecha</a>
+  <p class="note">© Kairos – Sueños Festivos</p>
+</footer>
+<dialog id="viewer" aria-labelledby="v-title">
+  <button class="v-close" id="v-close" aria-label="Cerrar">&times;</button>
+  <button class="v-nav v-prev" id="v-prev" aria-label="Producto anterior">&#8249;</button>
+  <button class="v-nav v-next" id="v-next" aria-label="Producto siguiente">&#8250;</button>
+  <img id="v-img" src="" alt="">
+  <div class="v-info">
+    <h2 id="v-title"></h2>
+    <a class="btn" id="v-wa" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+  </div>
+</dialog>
+<script>
+// ====== EDITA AQUÍ ======
+const WHATSAPP = "573000000000"; // tu número con indicativo de país, sin + ni espacios
+const items = [
+  {img:"decoracion-1.jpg", name:"Cumpleaños personalizado con nombre"},
+  {img:"decoracion-2.jpg", name:"Arco negro y rosa con neón"},
+  {img:"decoracion-3.jpg", name:"Cortina metálica rosa"},
+  {img:"decoracion-4.jpg", name:"Aro con tul y globos nude"},
+  {img:"decoracion-5.jpg", name:"Arco orgánico con número luminoso"},
+  {img:"decoracion-6.jpg", name:"Arco rosa y dorado con neón"},
+  {img:"decoracion-7.jpg", name:"Panel shimmer y banderín"},
+  {img:"decoracion-8.jpg", name:"Cortina plateada y globos"},
+  {img:"decoracion-9.jpg", name:"Negro y dorado con sombreros"}
+];
+// ========================
+const wa = t => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
+document.getElementById("grid").innerHTML = items.map((i, n) => `
+  <article class="card">
+    <button class="thumb" type="button" data-i="${n}" aria-label="Ver ${i.name}"><img src="images/${i.img}" alt="${i.name}" loading="lazy"></button>
+    <div><h2><button type="button" data-i="${n}">${i.name}</button></h2><a href="${wa('Hola Kairos, me interesa: '+i.name)}" target="_blank" rel="noopener">Pedir</a></div>
+  </article>`).join("");
+
+// ====== Visor de producto ======
+const dlg = document.getElementById("viewer");
+let cur = 0;
+function show(n){
+  cur = (n + items.length) % items.length;
+  const it = items[cur];
+  const img = document.getElementById("v-img");
+  img.src = "images/" + it.img; img.alt = it.name;
+  document.getElementById("v-title").textContent = it.name;
+  document.getElementById("v-wa").href = wa("Hola Kairos, me interesa: " + it.name);
+  try { history.replaceState(null, "", "#producto-" + (cur + 1)); } catch(e){}
+}
+function openItem(n){ show(n); if (!dlg.open) dlg.showModal(); }
+document.getElementById("grid").addEventListener("click", e => {
+  const b = e.target.closest("[data-i]");
+  if (b) openItem(+b.dataset.i);
+});
+document.getElementById("v-close").onclick = () => dlg.close();
+document.getElementById("v-prev").onclick = () => show(cur - 1);
+document.getElementById("v-next").onclick = () => show(cur + 1);
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener("close", () => { try { history.replaceState(null, "", location.pathname + location.search); } catch(e){} });
+dlg.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") show(cur - 1);
+  if (e.key === "ArrowRight") show(cur + 1);
+});
+// Enlace directo: index.html#producto-3 abre ese producto
+function fromHash(){
+  const m = location.hash.match(/^#producto-(\d+)$/);
+  if (m && items[m[1]-1]) openItem(m[1]-1);
+}
+window.addEventListener("hashchange", fromHash);
+fromHash();
+const hi = wa("Hola Kairos, quiero cotizar una decoración.");
+["wa-top","wa-bottom"].forEach(id => document.getElementById(id).href = hi);
+</script>
+</body>
+</html>
